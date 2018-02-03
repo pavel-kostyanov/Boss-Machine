@@ -7,7 +7,7 @@ const minionsRouter = express.Router();
 minionsRouter.get('/', (req, res) =>{
   const allMinions = db.getAllFromDatabase('minions');
   if(allMinions){
-    res.status(201).send(allMinions);
+    res.status(200).send(allMinions);
  }else{
     res.status(404).send();
   }
@@ -15,8 +15,9 @@ minionsRouter.get('/', (req, res) =>{
 
 minionsRouter.get('/:minionId', (req, res, next) =>{
   const minion = db.getFromDatabaseById('minions', req.params.minionId);
+  console.log(minion);
   if(minion){
-    res.status(201).send(minion);
+    res.status(200).send(minion);
  }else{
     res.status(404).send();
   }
@@ -61,14 +62,13 @@ minionsRouter.post('/:minionId/work', (req, res, next) => {
    }
 });
 
-minionsRouter.get('/:minionId/work', (req, res, next) =>{  
-  const works = db.getFromDatabaseById('work', req.params.minionId);
-
- //  if(work){
- //    res.status(201).send(work);
- // }else{
- //    res.status(404).send();
- //  }
+minionsRouter.get('/:minionId/work', (req, res, next) =>{
+  const work = [db.getWorkFromDatabaseById('work', req.params.minionId)];
+  if(work){
+    res.status(200).send(work);
+ }else{
+    res.status(404).send();
+  }
 });
 
 module.exports = minionsRouter;
