@@ -15,6 +15,7 @@ meetingsRouter.get('/', (req, res) =>{
 meetingsRouter.post('/', (req, res, next) => {
   const newMeeting = db.createMeeting ();
     if(newMeeting){
+    db.addToDatabase('meetings', newMeeting);  
      res.status(201).send(newMeeting);
    }else{
      res.status(404).send();

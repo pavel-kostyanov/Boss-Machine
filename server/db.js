@@ -21,7 +21,7 @@ const createMinion = () => {
   }
 }
 
-let workIdCounter = 33;
+let workIdCounter = 1;
 
 const createWork = (minionId) => {
   return {
@@ -211,15 +211,15 @@ const getFromDatabaseById = (modelType, id) => {
   });
 }
 
-const getWorkFromDatabaseById = (modelType, id) => {
-  const model = findDataArrayByName(modelType);
-  if (model === null) {
-    return null;
-  }  
-  return model.data.find((element) => {
-    return element.minionId === id;
-  });
-}
+// const getWorkFromDatabaseById = (modelType, id) => {
+//   const model = findDataArrayByName(modelType);
+//   if (model === null) {
+//     return null;
+//   }
+//   return model.data.find((element) => {
+//     return element.id === id;
+//   });
+// }
 
 const addToDatabase = (modelType, instance) => {
   const model = findDataArrayByName(modelType);
@@ -282,5 +282,5 @@ module.exports = {
   updateInstanceInDatabase,
   deleteFromDatabasebyId,
   deleteAllFromDatabase,
-  getWorkFromDatabaseById
+
 };

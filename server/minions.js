@@ -15,7 +15,7 @@ minionsRouter.get('/', (req, res) =>{
 
 minionsRouter.get('/:minionId', (req, res, next) =>{
   const minion = db.getFromDatabaseById('minions', req.params.minionId);
-  console.log(minion);
+
   if(minion){
     res.status(200).send(minion);
  }else{
@@ -53,6 +53,21 @@ minionsRouter.delete('/:minionId', (req, res) =>{
     }
 });
 
+minionsRouter.get('/:minionId/work', (req, res, next) =>{
+  // const minionID = Number(req.params.minionId);
+  // console.log(minionID);
+  // console.log(Number.isInteger(minionID));
+  const wor = db.getFromDatabaseById('work', req.params.minionId);
+  const work = parseInt(wor.minionId);
+
+  console.log(work);
+  if(work){
+    res.status(200).send(work);
+ }else{
+    res.status(404).send();
+  }
+});
+
 minionsRouter.post('/:minionId/work', (req, res, next) => {
    const newWork = db.addToDatabase ('work', req.body);
     if(newWork){
@@ -60,15 +75,6 @@ minionsRouter.post('/:minionId/work', (req, res, next) => {
    }else{
      res.status(404).send();
    }
-});
-
-minionsRouter.get('/:minionId/work', (req, res, next) =>{
-  const work = [db.getWorkFromDatabaseById('work', req.params.minionId)];
-  if(work){
-    res.status(200).send(work);
- }else{
-    res.status(404).send();
-  }
 });
 
 module.exports = minionsRouter;
