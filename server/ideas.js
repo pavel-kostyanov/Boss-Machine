@@ -6,7 +6,7 @@ const ideasRouter = express.Router();
 ideasRouter.get('/', (req, res) =>{
   const allIdeas = db.getAllFromDatabase('ideas');
   if(allIdeas){
-    res.status(201).send(allIdeas);
+    res.status(200).send(allIdeas);
  }else{
     res.status(404).send();
   }
@@ -15,7 +15,7 @@ ideasRouter.get('/', (req, res) =>{
 ideasRouter.get('/:ideaId', (req, res) =>{
   const idea = db.getFromDatabaseById('ideas', req.params.ideaId);
   if(idea){
-    res.status(201).send(idea);
+    res.status(200).send(idea);
  }else{
     res.status(404).send();
   }
@@ -43,7 +43,7 @@ ideasRouter.put('/:ideaId', (req, res) =>{
 ideasRouter.delete('/:ideaId', (req, res) =>{
   const result = db.deleteFromDatabasebyId('ideas', req.params.ideaId);
     if(result){
-      res.status(201).send(result);
+      res.status(204).send(result);
     }else{
       res.status(404).send();
     }

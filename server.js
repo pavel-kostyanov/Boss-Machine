@@ -14,5 +14,8 @@ app.use('/api', apiRouter);
 
 if (!module.parent) {
   app.listen(PORT, console.log('app is running on port 4001'));
-}
+ }
+
+
 //app.listen(4001, () => {console.log('app is running on port 4001')});
+module.exports = app;

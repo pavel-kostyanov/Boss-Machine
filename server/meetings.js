@@ -6,7 +6,7 @@ const meetingsRouter = express.Router();
 meetingsRouter.get('/', (req, res) =>{
   const allMeetings = db.getAllFromDatabase('meetings');
     if(allMeetings){
-      res.status(201).send(allMeetings);
+      res.status(200).send(allMeetings);
     }else{
       res.status(404).send();
   }
@@ -24,7 +24,7 @@ meetingsRouter.post('/', (req, res, next) => {
 meetingsRouter.delete('/', (req, res) =>{
   const result = db.deleteAllFromDatabase('meetings');
     if(result){
-      res.status(201).send(result);
+      res.status(204).send(result);
     }else{
       res.status(404).send();
     }
