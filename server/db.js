@@ -21,18 +21,6 @@ const createMinion = () => {
   }
 }
 
-let workIdCounter = 1;
-
-const createWork = (minionId) => {
-  return {
-    id: `${workIdCounter++}`,
-    title: `Close deal #${Math.floor(Math.random() * 4) + 3}`,
-    description: 'Close the biggest deal!',
-    hours: Math.floor(Math.random() * 8) + 1,
-    minionId: `${minionId}`,
-  }
-}
-
 let ideaIdCounter = 1;
 const companies = [
   'Codecademy',
@@ -74,6 +62,18 @@ const createMeeting = () => {
     date: date,
     day: date.toDateString(),
     note: `${option} ${faker.company.catchPhrase()}`,
+  }
+}
+
+let workIdCounter = 1;
+
+const createWork = (minionId) => {
+  return {
+    id: `${workIdCounter++}`,
+    title: `Close deal #${Math.floor(Math.random() * 4) + 3}`,
+    description: 'Close the biggest deal!',
+    hours: Math.floor(Math.random() * 8) + 1,
+    minionId: `${minionId}`,
   }
 }
 
@@ -211,16 +211,6 @@ const getFromDatabaseById = (modelType, id) => {
   });
 }
 
-// const getWorkFromDatabaseById = (modelType, id) => {
-//   const model = findDataArrayByName(modelType);
-//   if (model === null) {
-//     return null;
-//   }
-//   return model.data.find((element) => {
-//     return element.id === id;
-//   });
-// }
-
 const addToDatabase = (modelType, instance) => {
   const model = findDataArrayByName(modelType);
   if (model === null) {
@@ -265,6 +255,8 @@ const deleteFromDatabasebyId = (modelType, id) => {
   }
 }
 
+
+
 const deleteAllFromDatabase = (modelType) => {
   const model = findDataArrayByName(modelType);
   if (model === null) {
@@ -272,6 +264,57 @@ const deleteAllFromDatabase = (modelType) => {
   }
   model.data = [];
   return model.data;
+}
+
+const getWorkFromDatabaseById = (modelType, minionId) => {
+  const model = findDataArrayByName(modelType);
+  if (model === null) {
+    return null;
+  }
+
+  return model.data.filter(element => {
+     return element.minionId === minionId;
+  });
+
+  // return model.data.find((element) => {
+  //   return element.minionId === id;
+  // });
+}
+
+const deleteWorkFromDatabasebyId = (modelType, minionId, workId) => {
+  const model = findDataArrayByName(modelType);
+  if (model === null) {
+    return null;
+  }
+  //console.log(model.data);
+  let index = model.data.findIndex((element) => {
+    return element.id === workId && element.minionId === minionId;
+  });
+
+
+  if (index !== -1) {
+    model.data.splice(index, 1);
+  //  console.log(model.data);
+    return true;
+  } else {
+    return false;
+  }
+}
+
+const updateWorkInstanceInDatabase = (modelType, minionId, workId, instance) => {
+  const model = findDataArrayByName(modelType);
+  if (model === null) {
+    return null;
+  }
+  const instanceIndex = model.data.findIndex((element) => {
+    return (element.id === workId && element.minionId === minionId);
+  });
+  if (instanceIndex > -1 && model.isValid(instance)) {
+    model.data[instanceIndex] = instance;
+    return model.data[instanceIndex];
+  } else {
+    return null;
+  }
 }
 
 module.exports = {
@@ -282,5 +325,7 @@ module.exports = {
   updateInstanceInDatabase,
   deleteFromDatabasebyId,
   deleteAllFromDatabase,
-
+  getWorkFromDatabaseById,
+  deleteWorkFromDatabasebyId,
+  updateWorkInstanceInDatabase,
 };
