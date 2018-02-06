@@ -205,7 +205,6 @@ const getFromDatabaseById = (modelType, id) => {
   if (model === null) {
     return null;
   }
-
   return model.data.find((element) => {
     return element.id === id;
   });
@@ -271,14 +270,9 @@ const getWorkFromDatabaseById = (modelType, minionId) => {
   if (model === null) {
     return null;
   }
-
   return model.data.filter(element => {
      return element.minionId === minionId;
   });
-
-  // return model.data.find((element) => {
-  //   return element.minionId === id;
-  // });
 }
 
 const deleteWorkFromDatabasebyId = (modelType, minionId, workId) => {
@@ -288,13 +282,10 @@ const deleteWorkFromDatabasebyId = (modelType, minionId, workId) => {
   }
   //console.log(model.data);
   let index = model.data.findIndex((element) => {
-    return element.id === workId && element.minionId === minionId;
+    return (element.id === workId && element.minionId === minionId);
   });
-
-
   if (index !== -1) {
     model.data.splice(index, 1);
-  //  console.log(model.data);
     return true;
   } else {
     return false;
