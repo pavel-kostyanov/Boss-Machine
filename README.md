@@ -1,5 +1,11 @@
 # Boss Machine
 
+It was really difficult. I've done almost everything though I do not fully understand how it works. 
+There are still three errors left but I don't know how to fix them.
+
+With best regards
+Pavel
+
 ## Project Overview
 
 In this project, you will create an entire API to serve information to a Boss Machine, a unique management application for today's most accomplished entreprenerus. You will create routes to manage your 'minions', your brilliant 'million dollar ideas', and to handle all the annoying meetings that keep getting added to your busy schedule.

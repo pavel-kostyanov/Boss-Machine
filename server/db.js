@@ -254,8 +254,6 @@ const deleteFromDatabasebyId = (modelType, id) => {
   }
 }
 
-
-
 const deleteAllFromDatabase = (modelType) => {
   const model = findDataArrayByName(modelType);
   if (model === null) {
@@ -265,22 +263,27 @@ const deleteAllFromDatabase = (modelType) => {
   return model.data;
 }
 
+/**
+Getting all work from database by minion ID
+*/
 const getWorkFromDatabaseById = (modelType, minionId) => {
   const model = findDataArrayByName(modelType);
   if (model === null) {
     return null;
-  }
+  };
   return model.data.filter(element => {
      return element.minionId === minionId;
-  });
-}
+   });
 
+}
+/**
+Delete work from database by work ID and minion ID
+*/
 const deleteWorkFromDatabasebyId = (modelType, minionId, workId) => {
   const model = findDataArrayByName(modelType);
   if (model === null) {
     return null;
   }
-  //console.log(model.data);
   let index = model.data.findIndex((element) => {
     return (element.id === workId && element.minionId === minionId);
   });
@@ -291,7 +294,9 @@ const deleteWorkFromDatabasebyId = (modelType, minionId, workId) => {
     return false;
   }
 }
-
+/**
+Update work in database by work ID and minion ID
+*/
 const updateWorkInstanceInDatabase = (modelType, minionId, workId, instance) => {
   const model = findDataArrayByName(modelType);
   if (model === null) {

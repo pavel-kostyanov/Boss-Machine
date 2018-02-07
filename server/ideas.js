@@ -1,7 +1,16 @@
 const express = require('express');
 const db = require('./db.js');
-
+const checkMillionDollarIdea = require('./checkMillionDollarIdea');
 const ideasRouter = express.Router();
+
+ideasRouter.param('ideaId', (req, res, next, id) => {
+  if(id == Number(id)){
+    req.ideaId = id;
+    next();
+  }else{
+    res.status(404).send('minion ID is not a number');
+  }
+})
 
 ideasRouter.get('/', (req, res) =>{
   const allIdeas = db.getAllFromDatabase('ideas');
@@ -13,7 +22,7 @@ ideasRouter.get('/', (req, res) =>{
 });
 
 ideasRouter.get('/:ideaId', (req, res) =>{
-  const idea = db.getFromDatabaseById('ideas', req.params.ideaId);
+  const idea = db.getFromDatabaseById('ideas', req.ideaId);
   if(idea){
     res.status(200).send(idea);
  }else{
@@ -21,7 +30,7 @@ ideasRouter.get('/:ideaId', (req, res) =>{
   }
 });
 
-ideasRouter.post('/', (req, res, next) => {
+ideasRouter.post('/', checkMillionDollarIdea, (req, res, next) => {
   const newIdeaObject = req.body;
   const ideaId = db.addToDatabase ('ideas', newIdeaObject);
     if(ideaId){
@@ -31,17 +40,17 @@ ideasRouter.post('/', (req, res, next) => {
    }
 });
 
-ideasRouter.put('/:ideaId', (req, res) =>{
-  const updatedIdea = db.updateInstanceInDatabase('ideas', req.body);
-    if(updatedIdea){
-      res.status(201).send(updatedIdea);
-    }else{
-      res.status(404).send();
-    }
+ideasRouter.put('/:ideaId', checkMillionDollarIdea, (req, res, next) =>{
+  if(req.params.ideaId !== req.body.id) {
+    res.status(404).send();
+  }else{
+    const updatedIdea = db.updateInstanceInDatabase('ideas', req.body);
+    res.send(updatedIdea);
+  }
 });
 
 ideasRouter.delete('/:ideaId', (req, res) =>{
-  const result = db.deleteFromDatabasebyId('ideas', req.params.ideaId);
+  const result = db.deleteFromDatabasebyId('ideas', req.ideaId);
     if(result){
       res.status(204).send(result);
     }else{
